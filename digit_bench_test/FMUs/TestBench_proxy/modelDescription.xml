@@ -1,0 +1,683 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fmiModelDescription fmiVersion="2.0" modelName="unifmu" guid="77236337-210e-4e9c-8f2c-c1a0677db21b" author="Christian Møldrup Legaard" generationDateAndTime="2020-10-23T19:51:25Z" variableNamingConvention="flat" generationTool="unifmu">
+  <CoSimulation modelIdentifier="unifmu" needsExecutionTool="true" canNotUseMemoryManagementFunctions="false" canHandleVariableCommunicationStepSize="true" />
+  <UnitDefinitions>
+    <Unit name="kg.m2">
+      <BaseUnit m="2" kg="1" />
+    </Unit>
+    <Unit name="N.m.s/rad">
+      <BaseUnit m="2" s="-1" kg="1" />
+    </Unit>
+    <Unit name="N.m/rad">
+      <BaseUnit m="2" s="-2" kg="1" />
+    </Unit>
+    <Unit name="1">
+      <BaseUnit />
+    </Unit>
+    <Unit name="s">
+      <BaseUnit s="1" />
+    </Unit>
+    <Unit name="W">
+      <BaseUnit m="2" s="-3" kg="1" />
+    </Unit>
+    <Unit name="rad/s2">
+      <BaseUnit s="-2" />
+    </Unit>
+    <Unit name="N.m">
+      <BaseUnit m="2" s="-2" kg="1" />
+    </Unit>
+    <Unit name="s-2">
+      <BaseUnit s="-2" />
+    </Unit>
+    <Unit name="Hz">
+      <BaseUnit s="-1" />
+    </Unit>
+    <Unit name="rad/s">
+      <BaseUnit s="-1" />
+    </Unit>
+    <Unit name="rad">
+      <BaseUnit />
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType name="Modelica.Blocks.Types.Init">
+      <Enumeration>
+        <Item name="NoInit" value="1"/>
+        <Item name="SteadyState" value="2"/>
+        <Item name="InitialState" value="3"/>
+        <Item name="InitialOutput" value="4"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType name="StateSelect">
+      <Enumeration>
+        <Item name="never" value="1"/>
+        <Item name="avoid" value="2"/>
+        <Item name="default" value="3"/>
+        <Item name="prefer" value="4"/>
+        <Item name="always" value="5"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="1.0" tolerance="1e-06"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="coupling.phi"
+    valueReference="0"
+    description="Flange moves with angle phi due to torque tau"
+    initial="exact">
+    <Real start="0.0" unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="test_bench_ctrl.x"
+    valueReference="1"
+    description="State of block"
+    initial="exact">
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="testbench_inertia.phi"
+    valueReference="2"
+    description="Absolute rotation angle of component"
+    initial="exact">
+    <Real start="0.0" unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="testbench_inertia.w"
+    valueReference="3"
+    description="Absolute angular velocity of component (= der(phi))"
+    initial="exact">
+    <Real start="0.0" unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="der(coupling.phi)"
+    valueReference="4"
+    description="der(Flange moves with angle phi due to torque tau)"
+    >
+    <Real derivative="1" unit="Hz"/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="der(test_bench_ctrl.x)"
+    valueReference="5"
+    description="der(State of block)"
+    >
+    <Real derivative="2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="der(testbench_inertia.phi)"
+    valueReference="6"
+    description="der(Absolute rotation angle of component)"
+    >
+    <Real derivative="3" unit="Hz"/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="der(testbench_inertia.w)"
+    valueReference="7"
+    description="der(Absolute angular velocity of component (= der(phi)))"
+    >
+    <Real derivative="4" unit="s-2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="der(coupling.w_internal)"
+    valueReference="8"
+    description="Needed to connect to conditional connector w"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="der(testbench_coupling.phi_rel)"
+    valueReference="9"
+    description="Relative rotation angle (= flange_b.phi - flange_a.phi)"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="der(testbench_coupling.tau_c)"
+    valueReference="10"
+    description="Spring torque"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="der(testbench_coupling.tau_d)"
+    valueReference="11"
+    description="Damping torque"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="der(testbench_coupling.w_rel)"
+    valueReference="12"
+    description="Relative angular velocity (= der(phi_rel))"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="angle_sensor.flange.tau"
+    valueReference="13"
+    description="Cut torque in the flange"
+    initial="exact">
+    <Real start="0.0" unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="in_set_speed"
+    valueReference="15"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="in_torque"
+    valueReference="16"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="out_acceleration"
+    valueReference="17"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="out_angle"
+    valueReference="18"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="out_angle_inertia"
+    valueReference="19"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="out_speed"
+    valueReference="20"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="test_bench_feedback.y"
+    valueReference="21"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="test_bench_speed_sensor.flange.tau"
+    valueReference="22"
+    description="Cut torque in the flange"
+    initial="exact">
+    <Real start="0.0" unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="test_bench_torque.tau"
+    valueReference="24"
+    description="Accelerating torque acting at flange (= -flange.tau)"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="testbench_coupling.a_rel"
+    valueReference="25"
+    description="Relative angular acceleration (= der(w_rel))"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="testbench_coupling.lossPower"
+    valueReference="26"
+    description="Loss power leaving component via heatPort (&gt; 0, if heat is flowing out of component)"
+    >
+    <Real unit="W"/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="testbench_coupling.phi_rel"
+    valueReference="27"
+    description="Relative rotation angle (= flange_b.phi - flange_a.phi)"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="testbench_coupling.w_rel"
+    valueReference="30"
+    description="Relative angular velocity (= der(phi_rel))"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="testbench_inertia.a"
+    valueReference="31"
+    description="Absolute angular acceleration of component (= der(w))"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="test_bench_ctrl.T"
+    valueReference="32"
+    description="Time Constant (T&gt;0 required)"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="1e-60" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="test_bench_ctrl.k"
+    valueReference="33"
+    description="Gain"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" unit="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "31" -->
+  <ScalarVariable
+    name="test_bench_ctrl.x_start"
+    valueReference="34"
+    description="Initial or guess value of state"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "32" -->
+  <ScalarVariable
+    name="test_bench_ctrl.y_start"
+    valueReference="35"
+    description="Initial value of output"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "33" -->
+  <ScalarVariable
+    name="testbench_coupling.c"
+    valueReference="36"
+    description="Spring constant"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="N.m/rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "34" -->
+  <ScalarVariable
+    name="testbench_coupling.d"
+    valueReference="37"
+    description="Damping constant"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="N.m.s/rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "35" -->
+  <ScalarVariable
+    name="testbench_coupling.phi_nominal"
+    valueReference="38"
+    description="Nominal value of phi_rel (used for scaling)"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "36" -->
+  <ScalarVariable
+    name="testbench_coupling.phi_rel0"
+    valueReference="39"
+    description="Unstretched spring angle"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0" unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "37" -->
+  <ScalarVariable
+    name="testbench_inertia.J"
+    valueReference="40"
+    description="Moment of inertia"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="kg.m2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "38" -->
+  <ScalarVariable
+    name="angle_sensor.flange.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "39" -->
+  <ScalarVariable
+    name="angle_sensor.phi"
+    valueReference="2"
+    description="Absolute angle of flange as output signal"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "40" -->
+  <ScalarVariable
+    name="coupling.a"
+    valueReference="17"
+    description="Flange moves with angular acceleration a due to torque tau"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "41" -->
+  <ScalarVariable
+    name="coupling.flange.phi"
+    valueReference="0"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "42" -->
+  <ScalarVariable
+    name="coupling.flange.tau"
+    valueReference="16"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "43" -->
+  <ScalarVariable
+    name="coupling.tau"
+    valueReference="16"
+    description="Torque to drive the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "44" -->
+  <ScalarVariable
+    name="coupling.w"
+    valueReference="20"
+    description="Flange moves with speed w due to torque tau"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "45" -->
+  <ScalarVariable
+    name="test_bench_ctrl.u"
+    valueReference="21"
+    description="Connector of Real input signal"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "46" -->
+  <ScalarVariable
+    name="test_bench_ctrl.y"
+    valueReference="24"
+    description="Connector of Real output signal"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "47" -->
+  <ScalarVariable
+    name="test_bench_feedback.u1"
+    valueReference="15"
+    description="Commanded input"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "48" -->
+  <ScalarVariable
+    name="test_bench_feedback.u2"
+    valueReference="3"
+    description="Feedback input"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "49" -->
+  <ScalarVariable
+    name="test_bench_speed_sensor.flange.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "50" -->
+  <ScalarVariable
+    name="test_bench_speed_sensor.w"
+    valueReference="3"
+    description="Absolute angular velocity of flange as output signal"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "51" -->
+  <ScalarVariable
+    name="test_bench_torque.flange.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "52" -->
+  <ScalarVariable
+    name="test_bench_torque.flange.tau"
+    valueReference="60"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "53" -->
+  <ScalarVariable
+    name="testbench_coupling.flange_a.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "54" -->
+  <ScalarVariable
+    name="testbench_coupling.flange_a.tau"
+    valueReference="16"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "55" -->
+  <ScalarVariable
+    name="testbench_coupling.flange_b.phi"
+    valueReference="0"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "56" -->
+  <ScalarVariable
+    name="testbench_coupling.flange_b.tau"
+    valueReference="64"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "57" -->
+  <ScalarVariable
+    name="testbench_coupling.tau"
+    valueReference="65"
+    description="Torque between flanges (= flange_b.tau)"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "58" -->
+  <ScalarVariable
+    name="testbench_inertia.flange_a.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "59" -->
+  <ScalarVariable
+    name="testbench_inertia.flange_a.tau"
+    valueReference="24"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "60" -->
+  <ScalarVariable
+    name="testbench_inertia.flange_b.phi"
+    valueReference="2"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "61" -->
+  <ScalarVariable
+    name="testbench_inertia.flange_b.tau"
+    valueReference="69"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "62" -->
+  <ScalarVariable
+    name="test_bench_ctrl.initType"
+    valueReference="0"
+    description="Type of initialization (1: no init, 2: steady state, 3: initial state, 4: initial output)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="Modelica.Blocks.Types.Init"/>
+  </ScalarVariable>
+  <!-- Index of variable = "63" -->
+  <ScalarVariable
+    name="testbench_coupling.stateSelect"
+    valueReference="1"
+    description="Priority to use phi_rel and w_rel as states"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="StateSelect"/>
+  </ScalarVariable>
+  <!-- Index of variable = "64" -->
+  <ScalarVariable
+    name="testbench_inertia.stateSelect"
+    valueReference="2"
+    description="Priority to use phi and w as states"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="StateSelect"/>
+  </ScalarVariable>
+  <!-- Index of variable = "65" -->
+  <ScalarVariable
+    name="coupling.use_a"
+    valueReference="0"
+    description="= true, enable the output connector a (angular acceleration)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "66" -->
+  <ScalarVariable
+    name="coupling.use_w"
+    valueReference="1"
+    description="= true, enable the output connector w (angular velocity)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "67" -->
+  <ScalarVariable
+    name="test_bench_torque.useSupport"
+    valueReference="2"
+    description="= true, if support flange enabled, otherwise implicitly grounded"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "68" -->
+  <ScalarVariable
+    name="testbench_coupling.useHeatPort"
+    valueReference="3"
+    description="= true, if heatPort is enabled"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="17" dependencies="" dependenciesKind="" />
+      <Unknown index="18" dependencies="" dependenciesKind="" />
+      <Unknown index="19" dependencies="" dependenciesKind="" />
+      <Unknown index="20" dependencies="" dependenciesKind="" />
+    </Outputs>
+    <Derivatives>
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="" dependenciesKind="" />
+      <Unknown index="7" dependencies="" dependenciesKind="" />
+      <Unknown index="8" dependencies="" dependenciesKind="" />
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="" dependenciesKind="" />
+      <Unknown index="7" dependencies="" dependenciesKind="" />
+      <Unknown index="8" dependencies="" dependenciesKind="" />
+      <Unknown index="17" dependencies="" dependenciesKind="" />
+      <Unknown index="18" dependencies="" dependenciesKind="" />
+      <Unknown index="19" dependencies="" dependenciesKind="" />
+      <Unknown index="20" dependencies="" dependenciesKind="" />
+      <Unknown index="62" dependencies="" dependenciesKind="" />
+      <Unknown index="63" dependencies="" dependenciesKind="" />
+      <Unknown index="64" dependencies="" dependenciesKind="" />
+      <Unknown index="65" dependencies="" dependenciesKind="" />
+      <Unknown index="66" dependencies="" dependenciesKind="" />
+      <Unknown index="67" dependencies="" dependenciesKind="" />
+      <Unknown index="68" dependencies="" dependenciesKind="" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

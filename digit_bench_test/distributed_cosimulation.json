@@ -1,0 +1,43 @@
+{
+	"fmus": {
+		"{SetInput}": "FMUs/SetInput_proxy",
+		"{TestBench}": "FMUs/TestBench_proxy",
+		"{Dut}": "FMUs/Dut_proxy"
+	},
+	"connections": {
+		"{TestBench}.tb.out_angle": [
+			"{Dut}.dut.in_angle"
+		],
+		"{TestBench}.tb.out_speed": [
+			"{Dut}.dut.in_speed"
+		],
+		"{TestBench}.tb.out_acceleration": [
+			"{Dut}.dut.in_acceleration"
+		],
+		"{Dut}.dut.out_torque": [
+			"{TestBench}.tb.in_torque"
+		],
+		"{SetInput}.in_dut.y": [
+			"{Dut}.dut.in_set_torque"
+		]
+	},
+	"parameters": {
+		"{SetInput}.in_dut.k": -1
+	},
+	"logVariables": {
+		"{Dut}.dut": ["out_angle"]
+	},
+	"algorithm":{
+		"type":"fixed-step",
+		"size":0.1
+	},
+	"loggingOn": false,
+	"overrideLogLevel": "DEBUG",
+	"convergenceRelativeTolerance": 0.1,
+  "convergenceAbsoluteTolerance": 0.0,
+  "convergenceAttempts": 5,
+  "startTime": 0.0,
+  "endTime": 50.0,
+  "stepSize": 0.1,
+  "simulationProgramDelay": true
+}

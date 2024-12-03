@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  Dut_fmiGetTypesPlatform @1
+  Dut_fmiGetVersion @2
+  Dut_fmiSetDebugLogging @3
+  Dut_fmiInstantiate @4
+  Dut_fmiFreeInstance @5
+  Dut_fmiSetupExperiment @6
+  Dut_fmiEnterInitializationMode @7
+  Dut_fmiExitInitializationMode @8
+  Dut_fmiTerminate @9
+  Dut_fmiReset @10
+  Dut_fmiGetReal @11
+  Dut_fmiGetInteger @12
+  Dut_fmiGetBoolean @13
+  Dut_fmiGetString @14
+  Dut_fmiSetReal @15
+  Dut_fmiSetInteger @16
+  Dut_fmiSetBoolean @17
+  Dut_fmiSetString @18
+  Dut_fmiGetFMUstate @19
+  Dut_fmiSetFMUstate @20
+  Dut_fmiFreeFMUstate @21
+  Dut_fmiSerializedFMUstateSize @22
+  Dut_fmiSerializeFMUstate @23
+  Dut_fmiDeSerializeFMUstate @24
+  Dut_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  Dut_fmiEnterEventMode @26
+  Dut_fmiNewDiscreteStates @27
+  Dut_fmiEnterContinuousTimeMode @28
+  Dut_fmiCompletedIntegratorStep @29
+  Dut_fmiSetTime @30
+  Dut_fmiSetContinuousStates @31
+  Dut_fmiGetDerivatives @32
+  Dut_fmiGetEventIndicators @33
+  Dut_fmiGetContinuousStates @34
+  Dut_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  Dut_fmiSetRealInputDerivatives @36
+  Dut_fmiGetRealOutputDerivatives @37
+  Dut_fmiDoStep @38
+  Dut_fmiCancelStep @39
+  Dut_fmiGetStatus @40
+  Dut_fmiGetRealStatus @41
+  Dut_fmiGetIntegerStatus @42
+  Dut_fmiGetBooleanStatus @43
+  Dut_fmiGetStringStatus @44

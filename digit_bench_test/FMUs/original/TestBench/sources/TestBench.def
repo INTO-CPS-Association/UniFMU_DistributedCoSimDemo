@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TestBench_fmiGetTypesPlatform @1
+  TestBench_fmiGetVersion @2
+  TestBench_fmiSetDebugLogging @3
+  TestBench_fmiInstantiate @4
+  TestBench_fmiFreeInstance @5
+  TestBench_fmiSetupExperiment @6
+  TestBench_fmiEnterInitializationMode @7
+  TestBench_fmiExitInitializationMode @8
+  TestBench_fmiTerminate @9
+  TestBench_fmiReset @10
+  TestBench_fmiGetReal @11
+  TestBench_fmiGetInteger @12
+  TestBench_fmiGetBoolean @13
+  TestBench_fmiGetString @14
+  TestBench_fmiSetReal @15
+  TestBench_fmiSetInteger @16
+  TestBench_fmiSetBoolean @17
+  TestBench_fmiSetString @18
+  TestBench_fmiGetFMUstate @19
+  TestBench_fmiSetFMUstate @20
+  TestBench_fmiFreeFMUstate @21
+  TestBench_fmiSerializedFMUstateSize @22
+  TestBench_fmiSerializeFMUstate @23
+  TestBench_fmiDeSerializeFMUstate @24
+  TestBench_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TestBench_fmiEnterEventMode @26
+  TestBench_fmiNewDiscreteStates @27
+  TestBench_fmiEnterContinuousTimeMode @28
+  TestBench_fmiCompletedIntegratorStep @29
+  TestBench_fmiSetTime @30
+  TestBench_fmiSetContinuousStates @31
+  TestBench_fmiGetDerivatives @32
+  TestBench_fmiGetEventIndicators @33
+  TestBench_fmiGetContinuousStates @34
+  TestBench_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TestBench_fmiSetRealInputDerivatives @36
+  TestBench_fmiGetRealOutputDerivatives @37
+  TestBench_fmiDoStep @38
+  TestBench_fmiCancelStep @39
+  TestBench_fmiGetStatus @40
+  TestBench_fmiGetRealStatus @41
+  TestBench_fmiGetIntegerStatus @42
+  TestBench_fmiGetBooleanStatus @43
+  TestBench_fmiGetStringStatus @44

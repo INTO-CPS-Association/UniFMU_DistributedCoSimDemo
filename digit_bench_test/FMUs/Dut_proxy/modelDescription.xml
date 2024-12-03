@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription fmiVersion="2.0" modelName="unifmu" guid="77236337-210e-4e9c-8f2c-c1a0677db21b" author="Christian Møldrup Legaard" generationDateAndTime="2020-10-23T19:51:25Z" variableNamingConvention="flat" generationTool="unifmu">
+  <CoSimulation modelIdentifier="unifmu" needsExecutionTool="true" canNotUseMemoryManagementFunctions="false" canHandleVariableCommunicationStepSize="true" />
+  <UnitDefinitions>
+    <Unit name="N.m">
+      <BaseUnit m="2" s="-2" kg="1" />
+    </Unit>
+    <Unit name="rad/s2">
+      <BaseUnit s="-2" />
+    </Unit>
+    <Unit name="kg.m2">
+      <BaseUnit m="2" kg="1" />
+    </Unit>
+    <Unit name="rad/s">
+      <BaseUnit s="-1" />
+    </Unit>
+    <Unit name="rad">
+      <BaseUnit />
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType name="StateSelect">
+      <Enumeration>
+        <Item name="never" value="1"/>
+        <Item name="avoid" value="2"/>
+        <Item name="default" value="3"/>
+        <Item name="prefer" value="4"/>
+        <Item name="always" value="5"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="1.0" tolerance="1e-06"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="der(dut_turbine.phi)"
+    valueReference="0"
+    description="Absolute rotation angle of component"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="der(dut_turbine.w)"
+    valueReference="1"
+    description="Absolute angular velocity of component (= der(phi))"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="dut_turbine.phi"
+    valueReference="3"
+    description="Absolute rotation angle of component"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="dut_turbine.w"
+    valueReference="4"
+    description="Absolute angular velocity of component (= der(phi))"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="in_acceleration"
+    valueReference="5"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="in_angle"
+    valueReference="6"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="in_set_torque"
+    valueReference="7"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="in_speed"
+    valueReference="8"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="out_acceleration"
+    valueReference="9"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="out_angle"
+    valueReference="10"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="out_speed"
+    valueReference="11"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="out_torque"
+    valueReference="12"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="dut_turbine.J"
+    valueReference="13"
+    description="Moment of inertia"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="1.0" min="0.0" unit="kg.m2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.a"
+    valueReference="5"
+    description="Angular acceleration to drive the flange (a = der(w) required)"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.flange.phi"
+    valueReference="6"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.flange.tau"
+    valueReference="20"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.phi"
+    valueReference="6"
+    description="Angle to drive the flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.tau"
+    valueReference="12"
+    description="Torque needed to drive the flange according to phi, w, a"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.w"
+    valueReference="8"
+    description="Speed to drive the flange (w=der(phi) required)"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="coupling.a"
+    valueReference="9"
+    description="Flange moves with angular acceleration a due to torque tau"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="coupling.flange.phi"
+    valueReference="6"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="coupling.flange.tau"
+    valueReference="7"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="coupling.phi"
+    valueReference="6"
+    description="Flange moves with angle phi due to torque tau"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="coupling.tau"
+    valueReference="7"
+    description="Torque to drive the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="coupling.w"
+    valueReference="8"
+    description="Flange moves with speed w due to torque tau"
+    >
+    <Real unit="rad/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="dut_turbine.a"
+    valueReference="9"
+    description="Absolute angular acceleration of component (= der(w))"
+    >
+    <Real unit="rad/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="dut_turbine.flange_a.phi"
+    valueReference="6"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="dut_turbine.flange_a.tau"
+    valueReference="12"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="dut_turbine.flange_b.phi"
+    valueReference="6"
+    description="Absolute rotation angle of flange"
+    >
+    <Real unit="rad"/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="dut_turbine.flange_b.tau"
+    valueReference="53"
+    description="Cut torque in the flange"
+    >
+    <Real unit="N.m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "31" -->
+  <ScalarVariable
+    name="dut_turbine.stateSelect"
+    valueReference="3"
+    description="Priority to use phi and w as states"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Enumeration declaredType="StateSelect"/>
+  </ScalarVariable>
+  <!-- Index of variable = "32" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.use_a"
+    valueReference="1"
+    description="= true, enable the input connector a (angular acceleration)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "33" -->
+  <ScalarVariable
+    name="angleToTorqueAdaptor.use_w"
+    valueReference="2"
+    description="= true, enable the input connector w (angular velocity)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "34" -->
+  <ScalarVariable
+    name="coupling.use_a"
+    valueReference="3"
+    description="= true, enable the output connector a (angular acceleration)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "35" -->
+  <ScalarVariable
+    name="coupling.use_w"
+    valueReference="4"
+    description="= true, enable the output connector w (angular velocity)"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="9" dependencies="" dependenciesKind="" />
+      <Unknown index="10" dependencies="" dependenciesKind="" />
+      <Unknown index="11" dependencies="" dependenciesKind="" />
+      <Unknown index="12" dependencies="" dependenciesKind="" />
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="9" dependencies="" dependenciesKind="" />
+      <Unknown index="10" dependencies="" dependenciesKind="" />
+      <Unknown index="11" dependencies="" dependenciesKind="" />
+      <Unknown index="12" dependencies="" dependenciesKind="" />
+      <Unknown index="31" dependencies="" dependenciesKind="" />
+      <Unknown index="32" dependencies="" dependenciesKind="" />
+      <Unknown index="33" dependencies="" dependenciesKind="" />
+      <Unknown index="34" dependencies="" dependenciesKind="" />
+      <Unknown index="35" dependencies="" dependenciesKind="" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

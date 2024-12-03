@@ -1,0 +1,1035 @@
+simulation 
+import BooleanLogic;
+import DataWriter;
+import DataWriterConfig;
+import FMI2;
+import FMI2Component;
+import Logger;
+import Math;
+import RealTime;
+import SimulationControl;
+{
+ 	int status = 0;
+	Math math = null;
+	Logger logger = null;
+	DataWriter dataWriter = null;
+	BooleanLogic booleanLogic = null;
+	@mapFmu(Dut -> "{Dut}");
+	FMI2 Dut = null;
+	@mapFmu(SetInput -> "{SetInput}");
+	FMI2 SetInput = null;
+	@mapFmu(TestBench -> "{TestBench}");
+	FMI2 TestBench = null;
+	@mapInstance(dut -> "dut");
+	FMI2Component dut = null;
+	@mapInstance(tb -> "tb");
+	FMI2Component tb = null;
+	@mapInstance(in_dut -> "in_dut");
+	FMI2Component in_dut = null;
+	try 
+	{
+		math = load("Math");
+		if( (((math == null))) )
+		{
+				error "math IS NULL ";
+		}
+		logger = load("Logger");
+		if( (((logger == null))) )
+		{
+				error "logger IS NULL ";
+		}
+		dataWriter = load("DataWriter");
+		if( (((dataWriter == null))) )
+		{
+				error "dataWriter IS NULL ";
+		}
+		booleanLogic = load("BooleanLogic");
+		if( (((booleanLogic == null))) )
+		{
+				error "booleanLogic IS NULL ";
+		}
+		Dut = load("FMI2", "77236337-210e-4e9c-8f2c-c1a0677db21b", "file:/home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/Dut_proxy/");
+		if( (((Dut == null))) )
+		{
+				error "Dut IS NULL ";
+		}
+		SetInput = load("FMI2", "77236337-210e-4e9c-8f2c-c1a0677db21b", "file:/home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/SetInput_proxy/");
+		if( (((SetInput == null))) )
+		{
+				error "SetInput IS NULL ";
+		}
+		TestBench = load("FMI2", "77236337-210e-4e9c-8f2c-c1a0677db21b", "file:/home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/TestBench_proxy/");
+		if( (((TestBench == null))) )
+		{
+				error "TestBench IS NULL ";
+		}
+		dut = Dut.instantiate("dut", false, false);
+		if( (((dut == null))) )
+		{
+				error "dut IS NULL ";
+		}
+		tb = TestBench.instantiate("tb", false, false);
+		if( (((tb == null))) )
+		{
+				error "tb IS NULL ";
+		}
+		in_dut = SetInput.instantiate("in_dut", false, false);
+		if( (((in_dut == null))) )
+		{
+				error "in_dut IS NULL ";
+		}
+		real STEP_SIZE = 0.1;
+		real START_TIME = 0.0;
+		real END_TIME = 50.0;
+		int FMI_OK = 0;
+		int FMI_DISCARD = 2;
+		int FMI_ERROR = 3;
+		int FMI_FATAL = 4;
+		BooleanLogic booleanLogic1;
+		try 
+		{
+			booleanLogic1 = load("BooleanLogic");
+			if( ((booleanLogic1 == null)) )
+			{
+					error "Failed load of: booleanLogic1";
+			}
+			real dutRealShare[1];
+			real tbRealShare[3];
+			real in_dutRealShare[1];
+			real in_dutRealIo[4];
+			uint in_dutUintVref[4];
+			real tbRealIo[41];
+			uint tbUintVref[41];
+			real dutRealIo[16];
+			uint dutUintVref[16];
+			real fixed_end_time = 0.0;
+			fixed_end_time = END_TIME;
+			status = dut.setupExperiment(true, 0.1, START_TIME, true, END_TIME);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setupExperiment' on 'dut'";
+			}
+			status = tb.setupExperiment(true, 0.1, START_TIME, true, END_TIME);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setupExperiment' on 'tb'";
+			}
+			status = in_dut.setupExperiment(true, 0.1, START_TIME, true, END_TIME);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetupExperiment failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'setupExperiment' on 'in_dut'";
+			}
+			dutUintVref[0] = 13;
+			dutRealIo[0] = 1.0;
+			status = dut.setReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setReal' on 'dut'";
+			}
+			tbUintVref[0] = 0;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 1;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 2;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 3;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 13;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 22;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 32;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 33;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 34;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 35;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 36;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 37;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 38;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 39;
+			tbRealIo[0] = 0.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			tbUintVref[0] = 40;
+			tbRealIo[0] = 1.0;
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			in_dutUintVref[0] = 2;
+			in_dutRealIo[0] = -1.0;
+			status = in_dut.setReal(in_dutUintVref, 1, in_dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'setReal' on 'in_dut'";
+			}
+			status = dut.enterInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'enterInitializationMode' on 'dut'";
+			}
+			status = tb.enterInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'enterInitializationMode' on 'tb'";
+			}
+			status = in_dut.enterInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "EnterInitializationMode failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'enterInitializationMode' on 'in_dut'";
+			}
+			in_dutUintVref[0] = 0;
+			status = in_dut.getReal(in_dutUintVref, 1, in_dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'getReal' on 'in_dut'";
+			}
+			in_dutRealShare[0] = in_dutRealIo[0];
+			dutUintVref[0] = 7;
+			dutRealIo[0] = in_dutRealShare[0];
+			status = dut.setReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setReal' on 'dut'";
+			}
+			tbUintVref[0] = 20;
+			status = tb.getReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'getReal' on 'tb'";
+			}
+			tbRealShare[0] = tbRealIo[0];
+			dutUintVref[0] = 8;
+			dutRealIo[0] = tbRealShare[0];
+			status = dut.setReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setReal' on 'dut'";
+			}
+			tbUintVref[0] = 17;
+			status = tb.getReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'getReal' on 'tb'";
+			}
+			tbRealShare[1] = tbRealIo[0];
+			dutUintVref[0] = 5;
+			dutRealIo[0] = tbRealShare[1];
+			status = dut.setReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setReal' on 'dut'";
+			}
+			tbUintVref[0] = 18;
+			status = tb.getReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'getReal' on 'tb'";
+			}
+			tbRealShare[2] = tbRealIo[0];
+			dutUintVref[0] = 6;
+			dutRealIo[0] = tbRealShare[2];
+			status = dut.setReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'setReal' on 'dut'";
+			}
+			dutUintVref[0] = 12;
+			status = dut.getReal(dutUintVref, 1, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'getReal' on 'dut'";
+			}
+			dutRealShare[0] = dutRealIo[0];
+			tbUintVref[0] = 16;
+			tbRealIo[0] = dutRealShare[0];
+			status = tb.setReal(tbUintVref, 1, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'setReal' on 'tb'";
+			}
+			status = dut.exitInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'exitInitializationMode' on 'dut'";
+			}
+			status = tb.exitInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'exitInitializationMode' on 'tb'";
+			}
+			status = in_dut.exitInitializationMode();
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "ExitInitializationMode failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'exitInitializationMode' on 'in_dut'";
+			}
+		}		finally 
+		{
+			if( ((booleanLogic1 != null)) )
+			{
+					unload(booleanLogic1);
+					booleanLogic1 = null;
+			}
+		}
+		BooleanLogic booleanLogic2;
+		RealTime realTime;
+		DataWriter dataWriter1;
+		SimulationControl simulationControl;
+		try 
+		{
+			simulationControl = load("SimulationControl");
+			if( ((simulationControl == null)) )
+			{
+					error "Failed load of: simulationControl";
+			}
+			dataWriter1 = load("DataWriter");
+			if( ((dataWriter1 == null)) )
+			{
+					error "Failed load of: dataWriter1";
+			}
+			realTime = load("RealTime");
+			if( ((realTime == null)) )
+			{
+					error "Failed load of: realTime";
+			}
+			booleanLogic2 = load("BooleanLogic");
+			if( ((booleanLogic2 == null)) )
+			{
+					error "Failed load of: booleanLogic2";
+			}
+			bool in_dutCurrentTimeFullStep = true;
+			real in_dutCurrentTime = 0.0;
+			bool tbCurrentTimeFullStep = true;
+			real tbCurrentTime = 0.0;
+			bool dutCurrentTimeFullStep = true;
+			real dutCurrentTime = 0.0;
+			real dutRealShare[2];
+			real in_dutRealShare[1];
+			real tbRealShare[3];
+			real in_dutRealIo[4];
+			uint in_dutUintVref[4];
+			real tbRealIo[41];
+			uint tbUintVref[41];
+			real dutRealIo[16];
+			uint dutUintVref[16];
+			real jac_current_step_size = 0.0;
+			real jac_step_size = 0.0;
+			@TransferAs("START_TIME");
+			real jac_current_communication_point = 0.0;
+			real jac_end_time = 0.0;
+			jac_current_step_size = STEP_SIZE;
+			jac_step_size = STEP_SIZE;
+			jac_current_communication_point = START_TIME;
+			jac_end_time = END_TIME;
+			string datawriter_headers[6] = { "{Dut}.dut.out_angle" , "{Dut}.dut.out_torque" , "{TestBench}.tb.out_acceleration" , "{TestBench}.tb.out_angle" , "{TestBench}.tb.out_speed" , "{SetInput}.in_dut.y" };
+			DataWriterConfig datawriter_configuration = dataWriter1.writeHeader(datawriter_headers);
+			dutUintVref[0] = 10;
+			dutUintVref[1] = 12;
+			status = dut.getReal(dutUintVref, 2, dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", dut);
+					}
+					error "Failed to 'getReal' on 'dut'";
+			}
+			tbUintVref[0] = 17;
+			tbUintVref[1] = 18;
+			tbUintVref[2] = 20;
+			status = tb.getReal(tbUintVref, 3, tbRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", tb);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", tb);
+					}
+					error "Failed to 'getReal' on 'tb'";
+			}
+			in_dutUintVref[0] = 0;
+			status = in_dut.getReal(in_dutUintVref, 1, in_dutRealIo);
+			if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+			{
+					if( ((status == FMI_ERROR)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", in_dut);
+					}
+					if( ((status == FMI_FATAL)) )
+					{
+							logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", in_dut);
+					}
+					error "Failed to 'getReal' on 'in_dut'";
+			}
+			tbRealShare[0] = tbRealIo[0];
+			tbRealShare[1] = tbRealIo[1];
+			tbRealShare[2] = tbRealIo[2];
+			in_dutRealShare[0] = in_dutRealIo[0];
+			dutRealShare[0] = dutRealIo[0];
+			dutRealShare[1] = dutRealIo[1];
+			real fmu_communicationpoints[3];
+			dataWriter1.writeDataPoint(datawriter_configuration, jac_current_communication_point, dutRealShare[0], dutRealShare[1], tbRealShare[0], tbRealShare[1], tbRealShare[2], in_dutRealShare[0]);
+			real real_start_time = 0.0;
+			real realTime1 = realTime.getRealTime();
+			real_start_time = realTime1;
+			bool any_discards = false;
+			while( ((!true || ((jac_current_communication_point + jac_current_step_size) < jac_end_time))) )
+			{
+				bool tmp = simulationControl.stopRequested();
+				if( ((tmp)) )
+				{
+						error "Simulation stopped by user";
+				}
+				@Transfer();
+				dutUintVref[0] = 5;
+				dutUintVref[1] = 6;
+				dutUintVref[2] = 7;
+				dutUintVref[3] = 8;
+				dutRealIo[0] = tbRealShare[0];
+				dutRealIo[1] = tbRealShare[1];
+				dutRealIo[2] = in_dutRealShare[0];
+				dutRealIo[3] = tbRealShare[2];
+				status = dut.setReal(dutUintVref, 4, dutRealIo);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", dut);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", dut);
+						}
+						error "Failed to 'setReal' on 'dut'";
+				}
+				tbUintVref[0] = 16;
+				tbRealIo[0] = dutRealShare[1];
+				status = tb.setReal(tbUintVref, 1, tbRealIo);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "SetReal failed on '%s' with status: FMI_ERROR", tb);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "SetReal failed on '%s' with status: FMI_FATAL", tb);
+						}
+						error "Failed to 'setReal' on 'tb'";
+				}
+				any_discards = false;
+				status = dut.doStep(jac_current_communication_point, jac_current_step_size, false);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_ERROR", dut);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_FATAL", dut);
+						}
+						error "Failed to 'doStep' on 'dut'";
+				}
+				if( ((status != FMI_OK)) )
+				{
+						if( ((status == FMI_DISCARD)) )
+						{
+								status = dut.getRealStatus(2, ref dutCurrentTime);
+								dutCurrentTimeFullStep = false;
+						}
+				}
+				else
+				{
+						dutCurrentTime = jac_current_communication_point + jac_current_step_size;
+						dutCurrentTimeFullStep = true;
+				}
+				fmu_communicationpoints[0] = dutCurrentTime;
+				if( ((!dutCurrentTimeFullStep)) )
+				{
+						logger.log(1, "## FMU: '%s' DISCARDED step at sim-time: %f for step-size: %f and proposed sim-time: %.15f", "dut", jac_current_communication_point, jac_current_step_size, dutCurrentTime);
+						any_discards = any_discards || !dutCurrentTimeFullStep;
+				}
+				status = tb.doStep(jac_current_communication_point, jac_current_step_size, false);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_ERROR", tb);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_FATAL", tb);
+						}
+						error "Failed to 'doStep' on 'tb'";
+				}
+				if( ((status != FMI_OK)) )
+				{
+						if( ((status == FMI_DISCARD)) )
+						{
+								status = tb.getRealStatus(2, ref tbCurrentTime);
+								tbCurrentTimeFullStep = false;
+						}
+				}
+				else
+				{
+						tbCurrentTime = jac_current_communication_point + jac_current_step_size;
+						tbCurrentTimeFullStep = true;
+				}
+				fmu_communicationpoints[1] = tbCurrentTime;
+				if( ((!tbCurrentTimeFullStep)) )
+				{
+						logger.log(1, "## FMU: '%s' DISCARDED step at sim-time: %f for step-size: %f and proposed sim-time: %.15f", "tb", jac_current_communication_point, jac_current_step_size, tbCurrentTime);
+						any_discards = any_discards || !tbCurrentTimeFullStep;
+				}
+				status = in_dut.doStep(jac_current_communication_point, jac_current_step_size, false);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_ERROR", in_dut);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "DoStep failed on '%s' with status: FMI_FATAL", in_dut);
+						}
+						error "Failed to 'doStep' on 'in_dut'";
+				}
+				if( ((status != FMI_OK)) )
+				{
+						if( ((status == FMI_DISCARD)) )
+						{
+								status = in_dut.getRealStatus(2, ref in_dutCurrentTime);
+								in_dutCurrentTimeFullStep = false;
+						}
+				}
+				else
+				{
+						in_dutCurrentTime = jac_current_communication_point + jac_current_step_size;
+						in_dutCurrentTimeFullStep = true;
+				}
+				fmu_communicationpoints[2] = in_dutCurrentTime;
+				if( ((!in_dutCurrentTimeFullStep)) )
+				{
+						logger.log(1, "## FMU: '%s' DISCARDED step at sim-time: %f for step-size: %f and proposed sim-time: %.15f", "in_dut", jac_current_communication_point, jac_current_step_size, in_dutCurrentTime);
+						any_discards = any_discards || !in_dutCurrentTimeFullStep;
+				}
+				tbUintVref[0] = 17;
+				tbUintVref[1] = 18;
+				tbUintVref[2] = 20;
+				status = tb.getReal(tbUintVref, 3, tbRealIo);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", tb);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", tb);
+						}
+						error "Failed to 'getReal' on 'tb'";
+				}
+				in_dutUintVref[0] = 0;
+				status = in_dut.getReal(in_dutUintVref, 1, in_dutRealIo);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", in_dut);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", in_dut);
+						}
+						error "Failed to 'getReal' on 'in_dut'";
+				}
+				dutUintVref[0] = 10;
+				dutUintVref[1] = 12;
+				status = dut.getReal(dutUintVref, 2, dutRealIo);
+				if( (((status == FMI_ERROR) || (status == FMI_FATAL))) )
+				{
+						if( ((status == FMI_ERROR)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_ERROR", dut);
+						}
+						if( ((status == FMI_FATAL)) )
+						{
+								logger.log(4, "GetReal failed on '%s' with status: FMI_FATAL", dut);
+						}
+						error "Failed to 'getReal' on 'dut'";
+				}
+				tbRealShare[0] = tbRealIo[0];
+				tbRealShare[1] = tbRealIo[1];
+				tbRealShare[2] = tbRealIo[2];
+				in_dutRealShare[0] = in_dutRealIo[0];
+				dutRealShare[0] = dutRealIo[0];
+				dutRealShare[1] = dutRealIo[1];
+				real real_step_time = 0.0;
+				real realTime2 = realTime.getRealTime();
+				real_step_time = realTime2 - real_start_time;
+				if( ((real_step_time < (jac_current_communication_point * 1000))) )
+				{
+						real sleep_time = 0.0;
+						sleep_time = (jac_current_communication_point * 1000) - real_step_time;
+						logger.log(1, "## Simulation is ahead of real time. Sleeping for: %f MS", sleep_time);
+						realTime.sleep(sleep_time);
+				}
+				if( ((!any_discards)) )
+				{
+						jac_current_communication_point = jac_current_communication_point + jac_current_step_size;
+						dataWriter1.writeDataPoint(datawriter_configuration, jac_current_communication_point, dutRealShare[0], dutRealShare[1], tbRealShare[0], tbRealShare[1], tbRealShare[2], in_dutRealShare[0]);
+						jac_current_step_size = jac_step_size;
+				}
+			}
+			dataWriter1.close();
+		}		finally 
+		{
+			if( ((simulationControl != null)) )
+			{
+					unload(simulationControl);
+					simulationControl = null;
+			}
+			if( ((dataWriter1 != null)) )
+			{
+					unload(dataWriter1);
+					dataWriter1 = null;
+			}
+			if( ((realTime != null)) )
+			{
+					unload(realTime);
+					realTime = null;
+			}
+			if( ((booleanLogic2 != null)) )
+			{
+					unload(booleanLogic2);
+					booleanLogic2 = null;
+			}
+		}
+		dut.terminate();
+		tb.terminate();
+		in_dut.terminate();
+	}	finally 
+	{
+		if( (((dut != null))) )
+		{
+				Dut.freeInstance(dut);
+				dut = null;
+		}
+		if( (((tb != null))) )
+		{
+				TestBench.freeInstance(tb);
+				tb = null;
+		}
+		if( (((in_dut != null))) )
+		{
+				SetInput.freeInstance(in_dut);
+				in_dut = null;
+		}
+		if( (((Dut != null))) )
+		{
+				unload(Dut);
+				Dut = null;
+		}
+		if( (((SetInput != null))) )
+		{
+				unload(SetInput);
+				SetInput = null;
+		}
+		if( (((TestBench != null))) )
+		{
+				unload(TestBench);
+				TestBench = null;
+		}
+		if( (((math != null))) )
+		{
+				unload(math);
+				math = null;
+		}
+		if( (((logger != null))) )
+		{
+				unload(logger);
+				logger = null;
+		}
+		if( (((dataWriter != null))) )
+		{
+				unload(dataWriter);
+				dataWriter = null;
+		}
+		if( (((booleanLogic != null))) )
+		{
+				unload(booleanLogic);
+				booleanLogic = null;
+		}
+	}
+}
