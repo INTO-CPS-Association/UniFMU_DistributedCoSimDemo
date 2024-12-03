@@ -2,7 +2,7 @@
 This repository shows two examples of how to run a distributed co-simulation using the p2p distributed feature of UniFMU.
 The first example is about a co-simulation of one FMU, which is split into a proxy FMU and a remote model.
 The second example is about a co-simulation of three FMUs, in which each FMU is split into a proxy FMU-model pair.
-These examples relies on the following technologies:
+These examples rely on the following technologies (which need to be installed):
 - [FMPy](https://github.com/CATIA-Systems/FMPy) for the co-simulation of an individual FMU.
 - [Maestro co-simulation](https://github.com/INTO-CPS-Association/maestro) for the co-simulation of multiple FMUs.
 
@@ -29,7 +29,7 @@ These examples relies on the following technologies:
     ![figure private model](./figures/model.png)
 5. When finished, the process that ran the `test_timing_fmi2.py` script will compute and print the time the co-simulation required for completion.
 
-## Instructions for the co-simulation of multiple FMUs. {#co-sim-heading}
+## Instructions for the co-simulation of multiple FMUs.
 In this co-simulation (located in the folder `digit_bench_test`), we will use three existing models created with Modelica in a distributed co-simulation.
 Since the models have already been created, we don't need to update the model logic but reuse the generated FMU from Modelica instead.
 To do so, we will create proxy-model pairs with UniFMU, where the model part contains an existing black-box FMU. This applies to the three existing models.
@@ -60,5 +60,5 @@ The model names are: `Dut`, `TestBench`, and `SetInput`. We have three FMUs for 
 ## Troubleshooting
 - In case one of the examples fails, double check the installation of FMPy and Maestro. Notice that Maestro also requires a Java installation (> Java 11).
 - In case the distributed co-simulation is not continuing after having initialized the proxies and the models, double check the `IP` field in the `endpoint.toml` files in the folders with suffix `_private` and that the port being passed to the models during the `python backend.py PORT` is the same printed by the proxy.
-- In case the initialization of the black-box FMUs complain due to the `GUID` field, follow Step 7 in [These instructions](#co-sim-heading).
+- In case the initialization of the black-box FMUs complain due to the `GUID` field, follow Step 7 in [These instructions](#instructions-for-the-co-simulation-of-multiple-fmus).
 - If using a different setting different to localhost, account that the co-simulation will take longer due to network delays.
