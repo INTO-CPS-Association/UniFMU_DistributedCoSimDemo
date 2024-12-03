@@ -9,7 +9,7 @@ These examples relies on the following technologies:
 ## Instructions for the co-simulation of an individual FMU.
 1. Create the proxy-model pair of a test FMU using the following command of UniFMU (for its version with the feature for distributed co-simulation):
     ```
-    unifmu generate-distributed python test_distributed --zipped
+    ./unifmu generate-distributed python test_distributed --zipped
     ```
     This command generates two archives, namely, `test_distributed_proxy.fmu`, which is the proxy FMU, and the folder `test_distributed_private`, which is the model (this is not an FMU).
     For this test, we won't change anything in the FMU. It will run the default application.
@@ -37,13 +37,13 @@ The model names are: `Dut`, `TestBench`, and `SetInput`. We have three FMUs for 
 
 1. Create the three proxy-model pairs with UniFMU using the following commands:
     ```
-    unifmu generate-distributed python Dut --black-box-fmu
+    ./unifmu generate-distributed python Dut --black-box-fmu
     ```
     ```
-    unifmu generate-distributed python TestBench --black-box-fmu
+    ./unifmu generate-distributed python TestBench --black-box-fmu
     ```
     ```
-    unifmu generate-distributed python SetInput --black-box-fmu
+    ./unifmu generate-distributed python SetInput --black-box-fmu
     ```
     These three commands will generate six archives, `Dut_proxy`, `Dut_private`, `TestBench_proxy`, `TestBench_private`, `SetInput_proxy`, and `SetInput_private`. The existing FMUs are to be placed in the corresponding folders with suffix `_private` and must have the same name of the folder without the suffix `_private`. Finally, these archives are to be placed in the directory `digit_test_bench/FMUs` (as provided already).
 2. Update the `ModelDescription.xml` in each folder with suffix `_proxy` using the existing `ModelDescription.xml` in the existing FMUs `Dut.fmu`, `TestBench.fmu`, and `SetInput.fmu`.
