@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  SetInput_fmiGetTypesPlatform @1
+  SetInput_fmiGetVersion @2
+  SetInput_fmiSetDebugLogging @3
+  SetInput_fmiInstantiate @4
+  SetInput_fmiFreeInstance @5
+  SetInput_fmiSetupExperiment @6
+  SetInput_fmiEnterInitializationMode @7
+  SetInput_fmiExitInitializationMode @8
+  SetInput_fmiTerminate @9
+  SetInput_fmiReset @10
+  SetInput_fmiGetReal @11
+  SetInput_fmiGetInteger @12
+  SetInput_fmiGetBoolean @13
+  SetInput_fmiGetString @14
+  SetInput_fmiSetReal @15
+  SetInput_fmiSetInteger @16
+  SetInput_fmiSetBoolean @17
+  SetInput_fmiSetString @18
+  SetInput_fmiGetFMUstate @19
+  SetInput_fmiSetFMUstate @20
+  SetInput_fmiFreeFMUstate @21
+  SetInput_fmiSerializedFMUstateSize @22
+  SetInput_fmiSerializeFMUstate @23
+  SetInput_fmiDeSerializeFMUstate @24
+  SetInput_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  SetInput_fmiEnterEventMode @26
+  SetInput_fmiNewDiscreteStates @27
+  SetInput_fmiEnterContinuousTimeMode @28
+  SetInput_fmiCompletedIntegratorStep @29
+  SetInput_fmiSetTime @30
+  SetInput_fmiSetContinuousStates @31
+  SetInput_fmiGetDerivatives @32
+  SetInput_fmiGetEventIndicators @33
+  SetInput_fmiGetContinuousStates @34
+  SetInput_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  SetInput_fmiSetRealInputDerivatives @36
+  SetInput_fmiGetRealOutputDerivatives @37
+  SetInput_fmiDoStep @38
+  SetInput_fmiCancelStep @39
+  SetInput_fmiGetStatus @40
+  SetInput_fmiGetRealStatus @41
+  SetInput_fmiGetIntegerStatus @42
+  SetInput_fmiGetBooleanStatus @43
+  SetInput_fmiGetStringStatus @44
