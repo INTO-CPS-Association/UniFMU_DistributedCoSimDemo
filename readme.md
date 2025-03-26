@@ -160,7 +160,7 @@ This will start initializing each proxy FMU in the co-simulation as follows:
 ![figure maestro initialization](./figures/maestro_initialization2.png)
 6. For each FMU initialized by Maestro, run the corresponding model from a different process with the printed port information, as follows (using the Dut proxy-model pair). **Note:** remember to activate the virtual environment for dependencies:
 ![figure Dut initialization](./figures/initialization_Dut2.png)
-7. (Optional) If using the files and folders provided, when the co-simulation is finished, each process running a model will print the time the co-simulation required for completion. The last FMU being initialized will provide a rough idea of the time the co-simulation took.
+7. (Optional) If using the files and folders provided, when the co-simulation is finished, each process running a model will print the time the co-simulation required for completion. The last FMU being initialized will provide a rough idea of the time the co-simulation took.  
 8. The results of the co-simulation, stored by Maestro, will be available in the file `digit_bench_test/results/outputs.csv` after the co-simulation has finished.
 
 ## Troubleshooting
