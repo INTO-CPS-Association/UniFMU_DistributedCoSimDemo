@@ -1,10 +1,10 @@
 # Example distributed co-simulation with UniFMU
-This repository shows two examples of how to run a distributed co-simulation using the p2p distributed feature of UniFMU.
+This repository shows two examples of how to run a distributed co-simulation using the p2p distributed feature of [UniFMU](https://github.com/INTO-CPS-Association/unifmu).
 The first example is about a co-simulation of one FMU, which is split into a proxy FMU and a remote model.
 The second example is about a co-simulation of three FMUs, in which each FMU is split into a proxy FMU-model pair.
-These examples rely on the following technologies (which need to be installed):
-- [FMPy](https://github.com/CATIA-Systems/FMPy) for the co-simulation of an individual FMU.
-- [Maestro co-simulation](https://github.com/INTO-CPS-Association/maestro) for the co-simulation of multiple FMUs.
+These examples rely on the following technologies:
+- [FMPy](https://github.com/CATIA-Systems/FMPy) for the co-simulation of an individual FMU (this is installed via pip, explained below).
+- [Maestro co-simulation](https://github.com/INTO-CPS-Association/maestro) for the co-simulation of multiple FMUs (we provide the jar file to be used in the root folder).
 
 ## Overview of the repository
 - [Example of distributed co-simulation with UniFMU](#example-distributed-co-simulation-with-unifmu)
@@ -92,14 +92,14 @@ pip install -r requirements.txt
     python test_timing_fmi2.py test_distributed_proxy.fmu
     ```
     This script will start the proxy FMU, which will wait for the model to connect to the opened port as follows:
-    ![figure Proxy FMU](./figures/proxyFMU2.png)
-    In this case, the proxy FMU opens the port `39013`. We need this port to start the model.
+    ![figure Proxy FMU](./figures/proxyFMU.png)
+    In this case, the proxy FMU opens the port `40469`. We need this port to start the model.
 4. In a different process start the model as follows (**Note:** remember to change the port accordingly and have the virtual environment activated):
     ```
-    python test_distributed_private/backend.py 39013
+    python test_distributed_private/backend.py 40469
     ```
     This will start the peer-to-peer communication between proxy and model until completion, which is seen from the model as follows:
-    ![figure private model](./figures/model2.png)
+    ![figure private model](./figures/model.png)
 5. When finished, the process that ran the `test_timing_fmi2.py` script will compute and print the time the co-simulation required for completion.
 
 ## Instructions for the co-simulation of multiple FMUs.
