@@ -5,9 +5,9 @@ echo "Executing Co-simulation experiment"
 echo "-----------------------------"
 echo "Specification"
 echo "-----------------------------"
-maestro_path=/home/au698550/installs/Maestro # Change path accordingly
+maestro_path=../ # Change path accordingly
 output_path=results # Change accordingly
-maestro_jar=maestro-2.4.1-jar-with-dependencies.jar
+maestro_jar=maestro-3.0.2-jar-with-dependencies.jar
 
 java -jar $maestro_path/$maestro_jar import sg1 distributed_cosimulation.json -output generate
 

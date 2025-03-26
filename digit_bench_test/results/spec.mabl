@@ -743,7 +743,7 @@ import SimulationControl;
 			real realTime1 = realTime.getRealTime();
 			real_start_time = realTime1;
 			bool any_discards = false;
-			while( ((!true || ((jac_current_communication_point + jac_current_step_size) < jac_end_time))) )
+			while( ((!true || ((jac_current_communication_point + jac_current_step_size) <= jac_end_time))) )
 			{
 				bool tmp = simulationControl.stopRequested();
 				if( ((tmp)) )

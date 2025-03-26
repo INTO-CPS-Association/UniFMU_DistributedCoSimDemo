@@ -1,1 +1,13 @@
 *.pyc
+# Environments
+.env
+.venv
+.venv38
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Tests with an older version of unifmu
+digit_bench_test/FMUs/old/

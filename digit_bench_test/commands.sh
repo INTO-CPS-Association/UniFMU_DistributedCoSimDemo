@@ -17,19 +17,5 @@ rm FMUs/TestBench_proxy/TestBench_proxy.fmu
 cp FMUs/Dut_proxy/Dut_proxy.fmu FMUs
 rm FMUs/Dut_proxy/Dut_proxy.fmu
 
-
-# Wrap original FMUs as zip
-(cd FMUs/Dut && zip -r Dut.fmu .)
-cp FMUs/Dut/Dut.fmu FMUs
-rm FMUs/Dut/Dut.fmu
-
-(cd FMUs/TestBench && zip -r TestBench.fmu .)
-cp FMUs/TestBench/TestBench.fmu FMUs
-rm FMUs/TestBench/TestBench.fmu
-
-(cd FMUs/SetInput && zip -r SetInput.fmu .)
-cp FMUs/SetInput/SetInput.fmu FMUs
-rm FMUs/SetInput/SetInput.fmu
-
 # Co-simulation
 #./execute_cosimulation.sh

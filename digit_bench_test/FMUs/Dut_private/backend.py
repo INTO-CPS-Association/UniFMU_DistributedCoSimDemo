@@ -2,12 +2,12 @@ import coloredlogs,logging
 import colorama
 import os
 import sys
-import fmpy.fmi2
 import zmq
 import toml
-import fmpy
 from fmpy import read_model_description, extract
 from fmpy.fmi2 import FMU2Slave
+from shutil import rmtree
+import ctypes
 import time
 
 from schemas.fmi2_messages_pb2 import (
@@ -20,6 +20,10 @@ from schemas.fmi2_messages_pb2 import (
     Fmi2GetIntegerReturn,
     Fmi2GetBooleanReturn,
     Fmi2GetStringReturn,
+)
+from schemas.unifmu_handshake_pb2 import (
+    HandshakeStatus,
+    HandshakeReply,
 )
 
 logging.basicConfig(level=logging.DEBUG)
@@ -48,9 +52,9 @@ if __name__ == "__main__":
                     modelIdentifier=model_description.coSimulation.modelIdentifier,
                     instanceName='instance1')
     
-    # initialize
-    fmu.instantiate() ## Done here since unifmu is not sending the 'Fmi2Instantiate' message
-
+    can_handle_state = model_description.coSimulation.canGetAndSetFMUstate
+    max_size = 1024
+    ArrayType = ctypes.c_ubyte * max_size
 
     input_ok = False
     if len(sys.argv) == 2:
@@ -86,8 +90,9 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # send handshake
-    state = Fmi2EmptyReturn().SerializeToString()
-    socket.send(state)
+    handshake = HandshakeReply()
+    handshake.status = HandshakeStatus.OK
+    socket.send(handshake.SerializeToString())
 
     # dispatch commands to black-box FMU with fmpy
     command = Fmi2Command()
@@ -102,6 +107,7 @@ if __name__ == "__main__":
         # ================= FMI2 =================
 
         if group == "Fmi2Instantiate":
+            fmu.instantiate()
             result = Fmi2EmptyReturn()
             #fmu.instantiate() ## Done above (zmq never sending instantiate)
         elif group == "Fmi2DoStep":
@@ -127,6 +133,8 @@ if __name__ == "__main__":
         elif group == "Fmi2FreeInstance":
             result = Fmi2FreeInstanceReturn()
             fmu.freeInstance()
+            # Clean up unzipped temporary FMU directory
+            rmtree(unzipdir, ignore_errors=True)
             logger.info(f"Fmi2FreeInstance received, shutting down")
             ## For measuring execution time
             print("Total computation time: --- {} seconds ---".format(time.time() - start_time))
@@ -140,11 +148,27 @@ if __name__ == "__main__":
             result.status = fmu.reset()
         elif group == "Fmi2SerializeFmuState":
             result = Fmi2SerializeFmuStateReturn()
-            result.state = fmu.serializeFMUstate(fmu.getFMUState())
-            result.status = 0
+            if can_handle_state:
+                state = fmu.getFMUState()
+                data = ctypes.cast(state, ctypes.POINTER(ArrayType)).contents
+                bytes_data = bytes(data)
+                if isinstance(bytes_data, bytes):
+                    result.status = 0
+                    result.state = bytes_data
+                else:
+                    result.status = 3
+            else:
+                result.status = 3
         elif group == "Fmi2DeserializeFmuState":
             result = Fmi2StatusReturn()
-            result.status = fmu.deserializeFMUstate(data.state)
+            if can_handle_state:
+                if isinstance(data.state, bytes):
+                    fmu.setFMUstate(data.state)
+                    result.status = 0
+                else:
+                    result.status = 3
+            else:
+                result.status = 3 
         elif group == "Fmi2GetReal":
             result = Fmi2GetRealReturn()            
             result.values[:] = fmu.getReal(data.references)

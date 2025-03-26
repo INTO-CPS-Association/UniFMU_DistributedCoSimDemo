@@ -9,6 +9,7 @@ These examples rely on the following technologies (which need to be installed):
 ## Overview of the repository
 - [Example of distributed co-simulation with UniFMU](#example-distributed-co-simulation-with-unifmu)
   - [Overview of the repository](#overview-of-the-repository)
+  - [Setting up the virtual environment](#setting-up-the-virtual-environment)
   - [Instructions for the co-simulation of an individual FMU](#instructions-for-the-co-simulation-of-an-individual-fmu)
   - [Instructions for the co-simulation of multiple FMUs](#instructions-for-the-co-simulation-of-multiple-fmus)
   - [Troubleshooting](#troubleshooting)
@@ -54,10 +55,28 @@ These examples rely on the following technologies (which need to be installed):
  ┃ ┗ 📂TestBench_proxy
  ┣ 📂test_distributed_private (model of the demo of an individual FMU)
  ┃ 📜readme.md
+ ┃ 📜requirements.txt (requirements to set up the Python virtual environment)
  ┃ 📜test_distributed_proxy.fmu (proxy of the demo of an individual FMU)
  ┃ 📜test_timing_fmi2.py (script for running the demo of an individual FMU)
+ ┃ maestro-3.0.2-jar-with-dependencies.jar (Jar for running the co-simulation for the demo with multiple FMUs)
  ┃ unifmu (binary for Linux)
  ┗ unifmu.exe (binary for Windows)
+```
+
+## Setting up the virtual environment
+Create a virtual environment, install the requirements, and activate the virtual environment.
+
+**Linux:**
+```
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
+```
+**Windows:**
+```
+python -m venv venv
+source venv/Scripts/activate
+pip install -r requirements.txt
 ```
 
 ## Instructions for the co-simulation of an individual FMU.
@@ -73,14 +92,14 @@ These examples rely on the following technologies (which need to be installed):
     python test_timing_fmi2.py test_distributed_proxy.fmu
     ```
     This script will start the proxy FMU, which will wait for the model to connect to the opened port as follows:
-    ![figure Proxy FMU](./figures/proxyFMU.png)
-    In this case, the proxy FMU opens the port `32901`. We need this port to start the model.
-4. In a different process start the model as follows (**Note:** remember to change the port accordingly):
+    ![figure Proxy FMU](./figures/proxyFMU2.png)
+    In this case, the proxy FMU opens the port `39013`. We need this port to start the model.
+4. In a different process start the model as follows (**Note:** remember to change the port accordingly and have the virtual environment activated):
     ```
-    python test_distributed_private/backend.py 32901
+    python test_distributed_private/backend.py 39013
     ```
     This will start the peer-to-peer communication between proxy and model until completion, which is seen from the model as follows:
-    ![figure private model](./figures/model.png)
+    ![figure private model](./figures/model2.png)
 5. When finished, the process that ran the `test_timing_fmi2.py` script will compute and print the time the co-simulation required for completion.
 
 ## Instructions for the co-simulation of multiple FMUs.
@@ -131,14 +150,18 @@ cp ModelDescriptions/TestBench_proxy/modelDescription.xml digit_bench_test/FMUs/
  ```
  cp digit_bench_test/FMUs/original/Linux/TestBench.fmu digit_bench_test/FMUs/TestBench_private
  ``` 
-4. Update the fields `maestro_path` and `maestro_jar` in the script `execute_cosimulation.sh` with your installation parameters.
-5. (Optional) Update the `ip` field of the `endpoint.toml` files in the folders with suffix `_private` with the corresponding IP adress or valid URL of the server which is to execute the co-simulation.
-6. Execute the co-simulation with Maestro using the script `execute_cosimulation.sh`. This will start initializing each proxy FMU in the co-simulation as follows:
-![figure maestro initialization](./figures/maestro_initialization.png)
-7. For each FMU initialized by Maestro, run the corresponding model from a different process with the printed port information, as follows (using the Dut proxy-model pair):
-![figure Dut initialization](./figures/initialization_Dut.png)
-8. (Optional) If using the files and folders provided, when the co-simulation is finished, each process running a model will print the time the co-simulation required for completion. The last FMU being initialized will provide a rough idea of the time the co-simulation took.
-9. The results of the co-simulation, stored by Maestro, will be available in the file `digit_bench_test/results/outputs.csv` after the co-simulation has finished.
+4. (Optional) Update the `ip` field of the `endpoint.toml` files in the folders with suffix `_private` with the corresponding IP adress or valid URL of the server which is to execute the co-simulation.
+5. Execute the co-simulation with Maestro using the script `execute_cosimulation.sh` with:
+```
+cd digit_bench_test
+./execute_cosimulation.sh
+```
+This will start initializing each proxy FMU in the co-simulation as follows:
+![figure maestro initialization](./figures/maestro_initialization2.png)
+6. For each FMU initialized by Maestro, run the corresponding model from a different process with the printed port information, as follows (using the Dut proxy-model pair). **Note:** remember to activate the virtual environment for dependencies:
+![figure Dut initialization](./figures/initialization_Dut2.png)
+7. (Optional) If using the files and folders provided, when the co-simulation is finished, each process running a model will print the time the co-simulation required for completion. The last FMU being initialized will provide a rough idea of the time the co-simulation took.
+8. The results of the co-simulation, stored by Maestro, will be available in the file `digit_bench_test/results/outputs.csv` after the co-simulation has finished.
 
 ## Troubleshooting
 - In case one of the examples fails, double check the installation of FMPy, the Python dependencies, and Maestro. Notice that Maestro also requires a Java installation (> Java 11).

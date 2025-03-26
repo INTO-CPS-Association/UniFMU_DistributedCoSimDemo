@@ -1,18 +1,24 @@
-11:03:57.262 [main] INFO  org.intocps.maestro.parser.MablParserUtil - Parting file: generate/spec.mabl
-11:03:57.373 [main] DEBUG org.intocps.maestro.Mabl - Frameworks: []
-11:03:57.474 [main] DEBUG org.intocps.maestro.Mabl - Type checking
-11:03:57.643 [main] INFO  org.intocps.maestro.interpreter.MableInterpreter - Starting Mable Interpreter...
-11:03:57.679 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/Dut_proxy/binaries/linux64/unifmu.so
-11:03:57.680 [main] DEBUG org.intocps.fmi.jnifmuapi.NativeFmuLibraryLoader - Loading library: lib/Linux-amd64/libfmuapi.so
-11:03:57.680 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLibraryLoader - Extracting library from: lib/Linux-amd64/libfmuapi.so
-11:03:57.702 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLibraryLoader - Extracted library: /tmp/jnifmuapi12507370039503451404/jnifmuapi-Linux-amd64/libfmuapi.so
-11:03:57.703 [main] DEBUG org.intocps.fmi.jnifmuapi.NativeFmuLibraryLoader - Loaded Library file: /tmp/jnifmuapi12507370039503451404/jnifmuapi-Linux-amd64/libfmuapi.so
-11:03:57.705 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/Dut_proxy/binaries/linux64/unifmu.so
-11:03:57.705 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 127591138244736
-11:03:57.711 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/SetInput_proxy/binaries/linux64/unifmu.so
-11:03:57.717 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/SetInput_proxy/binaries/linux64/unifmu.so
-11:03:57.717 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 127591141013504
-11:03:57.723 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/TestBench_proxy/binaries/linux64/unifmu.so
-11:03:57.725 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/TestBench_proxy/binaries/linux64/unifmu.so
-11:03:57.725 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 127591140818384
-11:03:57.726 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - Loading native FMU. GUID: 77236337-210e-4e9c-8f2c-c1a0677db21b, NAME: dut
+11:49:55.757 [main] INFO  org.intocps.maestro.parser.MablParserUtil - Parting file: generate/spec.mabl
+11:49:55.872 [main] DEBUG org.intocps.maestro.Mabl - Frameworks: []
+11:49:55.969 [main] DEBUG org.intocps.maestro.Mabl - Type checking
+11:49:56.118 [main] INFO  org.intocps.maestro.interpreter.MableInterpreter - Starting Mable Interpreter...
+11:49:56.152 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/Dut_proxy/binaries/linux64/unifmu.so
+11:49:56.153 [main] DEBUG org.intocps.fmi.jnifmuapi.NativeFmuLibraryLoader - Loading library: lib/Linux-amd64/libfmuapi.so
+11:49:56.153 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLibraryLoader - Extracting library from: lib/Linux-amd64/libfmuapi.so
+11:49:56.168 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLibraryLoader - Extracted library: /tmp/jnifmuapi12741373116245536042/jnifmuapi-Linux-amd64/libfmuapi.so
+11:49:56.169 [main] DEBUG org.intocps.fmi.jnifmuapi.NativeFmuLibraryLoader - Loaded Library file: /tmp/jnifmuapi12741373116245536042/jnifmuapi-Linux-amd64/libfmuapi.so
+11:49:56.169 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/Dut_proxy/binaries/linux64/unifmu.so
+11:49:56.170 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 133734418034224
+11:49:56.174 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/SetInput_proxy/binaries/linux64/unifmu.so
+11:49:56.174 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/SetInput_proxy/binaries/linux64/unifmu.so
+11:49:56.174 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 133734420533360
+11:49:56.179 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loading FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/TestBench_proxy/binaries/linux64/unifmu.so
+11:49:56.180 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Successfully loaded FMU library: /home/au698550/Aarhus/FMI/distributed_co-simulation_unifmu/digit_bench_test/FMUs/TestBench_proxy/binaries/linux64/unifmu.so
+11:49:56.180 [main] DEBUG org.intocps.fmi.jnifmuapi.shared.NativeLoadManager - Loaded library into DLL pointer: 133734420347280
+11:49:56.181 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - Loading native FMU. GUID: 77236337-210e-4e9c-8f2c-c1a0677db21b, NAME: dut
+11:51:07.603 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - Component instantiate failed
+11:51:07.605 [main] INFO  org.intocps.maestro.interpreter.Interpreter - Error in simulation: dut IS NULL 
+11:51:07.605 [main] INFO  org.intocps.maestro.interpreter.Interpreter - Continuing with finally
+11:51:07.606 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - unload
+11:51:07.607 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - unload
+11:51:07.607 [main] DEBUG org.intocps.maestro.interpreter.Interpreter - unload
